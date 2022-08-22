@@ -30,7 +30,9 @@ func FindShortestPath(ori string, dest string, conn *net.UDPConn) (*ResponsePayl
 	if err != nil {
 		return nil, nil, err
 	}
+
 	start := time.Now()
+
 	if _, err := conn.Write(jsonRequest); err != nil {
 		return nil, nil, err
 	}
@@ -40,12 +42,15 @@ func FindShortestPath(ori string, dest string, conn *net.UDPConn) (*ResponsePayl
 	if err != nil {
 		return nil, nil, err
 	}
+
+	duration := time.Since(start)
+
 	jsonResponse = jsonResponse[:n]
 	responsePayload := ResponsePayload{}
 	if err := json.Unmarshal(jsonResponse, &responsePayload); err != nil {
 		return nil, nil, err
 	}
-	rtt := time.Since(start) - responsePayload.CalcDuration
+	rtt := duration - responsePayload.CalcDuration
 	return &responsePayload, &rtt, nil
 }
 
