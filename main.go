@@ -57,7 +57,7 @@ func FindShortestPath(ori string, dest string, conn *net.UDPConn) (*ResponsePayl
 func main() {
 	host, ok := os.LookupEnv("HOST")
 	if !ok {
-		log.Fatal("undefined PORT")
+		log.Fatal("undefined HOST")
 	}
 
 	if err := setup(); err != nil {
